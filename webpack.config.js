@@ -43,6 +43,7 @@ module.exports = function (env) {
 
   if (isDevelopment) {
     return webpackMerge(baseConfig, {
+      mode: 'development',
       devServer: {
         contentBase: path.resolve(__dirname, './src/js'),
         publicPath: '/',
@@ -58,6 +59,13 @@ module.exports = function (env) {
       ]
     });
   } else {
-    return baseConfig;
+    return webpackMerge(baseConfig, {
+      mode: 'production',
+      output: {
+        path: path.resolve(__dirname, './dist'),
+        filename: '[name].[chunkhash].js',
+        publicPath: '/',
+      },
+    });
   }
 }
